@@ -1,0 +1,9 @@
+<%- include('particles/header.ejs') %>
+
+<h1>Index</h1>
+
+<% for (let i = 0; i < items.length; i++) { %>
+    <p><%= items[i].name %></p>
+<% } %>
+
+<%- include('particles/footer.ejs') %>
