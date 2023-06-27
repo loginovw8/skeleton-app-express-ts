@@ -7,7 +7,7 @@ class ItemsController {
     async index(req: Request, res: Response) {
         const items = await prisma.item.findMany();
 
-        res.render('index', {
+        res.render('items/index', {
             items: items,
         });
     }
