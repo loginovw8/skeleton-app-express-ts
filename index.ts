@@ -1,40 +1,21 @@
-import path from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import express, { Express } from 'express';
-import { registerWebRoutes, registerApiRoutes } from './routes/index';
+import { registerRoutes } from './routes/index.js';
 
-require('dotenv').config();
+dotenv.config();
 
 const app: Express = express();
 
-/**
- * Use EJS as Template Engine.
- */
-app.set('view engine', 'ejs');
+app.use(cors({
+    origin: process.env.CORS?.split(","),
+}));
 
-/**
- * Define root views directory.
- */
-app.set('views', path.join(__dirname, '../resources/views'));
-
-/**
- * Middleware for serving static files. The root argument specifies the root
- * directory from which to serve static assets.
- */
-app.use(express.static('public'));
-
-/**
- * Middleware for parsing incoming requests with JSON payloads.
- */
 app.use(express.json());
-
-/**
- * Middleware for POST and PUT requests.
- */
 app.use(express.urlencoded({ extended: true }));
 
 app.listen(process.env.PORT, () => {
     console.log(`App listening on port ${process.env.PORT}`);
 });
 
-registerWebRoutes(app);
-registerApiRoutes(app);
+registerRoutes(app);
