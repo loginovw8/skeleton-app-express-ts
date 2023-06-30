@@ -11,26 +11,41 @@ datasource db {
 }
 
 model Item {
-    id         Int      @id @default(autoincrement())
-    name       String   @db.VarChar(255)
-    created_at DateTime @default(now())
-    updated_at DateTime @default(now())
+    id          Int      @id @default(autoincrement())
+    name        String   @db.VarChar(255)
+    location_id Int
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now())
 
-    categories MxNItemCategory[]
+    location Location @relation(fields: [location_id], references: [id])
+
+    categories ItemRelCategory[]
 
     @@map("items")
+}
+
+model Location {
+    id          Int      @id @default(autoincrement())
+    title       String   @db.VarChar(255)
+    description String   @db.VarChar(255)
+    created_at  DateTime @default(now())
+    updated_at  DateTime @default(now())
+
+    items Item[]
+
+    @@map("locations")
 }
 
 model Category {
     id   Int    @id @default(autoincrement())
     name String @db.VarChar(255)
 
-    items MxNItemCategory[]
+    items ItemRelCategory[]
 
     @@map("categories")
 }
 
-model MxNItemCategory {
+model ItemRelCategory {
     item        Item     @relation(fields: [item_id], references: [id])
     item_id     Int
     category    Category @relation(fields: [category_id], references: [id])
