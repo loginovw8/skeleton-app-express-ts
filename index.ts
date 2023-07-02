@@ -2,6 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import { registerRoutes } from './routes/index';
+import { registerApiRoutes } from './routes/api';
 
 dotenv.config();
 
@@ -22,3 +23,4 @@ app.listen(process.env.PORT, () => {
 });
 
 registerRoutes(app);
+registerApiRoutes(app);
